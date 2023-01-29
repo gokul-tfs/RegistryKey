@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="C:\Program Files (x86)\InstallShield\2018\Support\0409\buildreport.xsl"?>
+<BuildReport ProductName="64BitRegistryEntryTest" ProductVersion="1.0.0" Built="1-24-2023 11-50-36 AM" Config="Product Configuration 1" Media="Release 1" Uncompressed="0.00 MB">
+  <Features>
+    <Feature Title="##ID_STRING1##">NewFeature1</Feature>
+  </Features>
+  <Components>
+    <Component x64="32">AllOtherFiles</Component>
+    <Component x64="32" KeyPath="explorer.exe">explorer.exe</Component>
+  </Components>
+  <Prerequisites />
+  <MergeModules />
+  <DynamicLinks />
+  <Files>
+    <File Destination="{INSTALLDIR} [ProgramFilesFolder]My Company Name\My Product Name1" Component="explorer.exe" Modified="05-01-2023 15:04:33" Size="5092056" Version="10.0.22000.1335">explorer.exe</File>
+  </Files>
+</BuildReport>

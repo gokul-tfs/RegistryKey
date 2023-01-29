@@ -1,0 +1,89 @@
+#define TITLE_TEXT "RegDBCreateKeyEx & RegDBKeyExist"
+
+#define TITLE "RegDBSetKeyValueEx & RegDBGetKeyValueEx"
+
+
+// Include Ifx.h for built-in InstallScript function prototypes.
+
+#include "Ifx.h"
+
+export prototype ExFn_RegDBCreateKeyEx(HWND);
+
+function ExFn_RegDBCreateKeyEx(hMSI)
+
+    STRING szKey, szClass, szKeyRoot, szMsg, szAppCount, svLogFile,szRegName, szName;
+
+    NUMBER nResult1, nResult2;
+
+begin
+
+//Disable WOW64 Windows Registry redirection
+//REGDB_OPTIONS = REGDB_OPTIONS | REGDB_OPTION_WOW64_64KEY;
+
+//Disable WOW64 file system redirection
+//Disable(WOW64FSREDIRECTION);
+
+ RegDBSetDefaultRoot(HKEY_LOCAL_MACHINE);
+ 
+//szKey = INSTALL_REGISTRY_KEY;
+
+szKey = "SOFTWARE\\WOW6432Node\\Gokul\\Ash";  
+
+szName = "Ash";
+ 
+
+ if (RegDBCreateKeyEx(szKey, szClass) < 0) then
+
+        MessageBox ("First call to RegDBCreateKeyEx failed.", SEVERE);
+
+        abort;
+
+    else
+
+        SprintfBox (INFORMATION, TITLE_TEXT, "Successfully created: %s", szName);
+
+ 
+
+        // Check to see if the key just created exists.
+
+        if (RegDBKeyExist (szKey) < 0) then
+
+            MessageBox ("First call to RegDBKeyExist failed.", SEVERE);
+
+        else
+
+            SprintfBox (INFORMATION, TITLE_TEXT, "%s exists.", szName);
+
+        endif;
+
+    endif;
+       
+szAppCount ="ISTesting";
+
+szRegName = "ApplicationCount";
+
+nResult1 = RegDBSetKeyValueEx(szKey,szRegName, REGDB_STRING, szAppCount, -1);
+
+if ((nResult1 <0)) then
+
+MessageBox ("RegDBSetKeyValueEx failed.", SEVERE);
+
+        abort;
+        
+else
+
+        // Display what RegDBSetKeyValueEx has done.
+
+        szMsg = "%s set to: %s";
+
+        SprintfBox (INFORMATION, TITLE, szMsg, szRegName, szAppCount);
+
+    endif;
+
+// Enable WOW64 file system redirection
+//Enable(WOW64FSREDIRECTION);
+
+// Enable WOW64 Windows Registry redirection
+//REGDB_OPTIONS = REGDB_OPTIONS & ~REGDB_OPTION_WOW64_64KEY;
+
+end;
